@@ -1,0 +1,421 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="masterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TBL_PROJECT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="START_DATE" Type="datetime" Nullable="false" />
+          <Property Name="END_DATE" Type="datetime" Nullable="false" />
+          <Property Name="CREDITS" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="FIRST_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LAST_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'master.dbo.TBL_USER_PROJECT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TBL_USER_PROJECT">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+            <PropertyRef Name="PROJECT_ID" />
+            <PropertyRef Name="IS_ACTIVE" />
+            <PropertyRef Name="ASSIGNED_DATE" />
+          </Key>
+          <Property Name="USER_ID" Type="int" Nullable="false" />
+          <Property Name="PROJECT_ID" Type="int" Nullable="false" />
+          <Property Name="IS_ACTIVE" Type="bit" Nullable="false" />
+          <Property Name="ASSIGNED_DATE" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__TBL_USER___PROJE__3D491139">
+          <End Role="TBL_PROJECT" Type="Self.TBL_PROJECT" Multiplicity="1" />
+          <End Role="TBL_USER_PROJECT" Type="Self.TBL_USER_PROJECT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_PROJECT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TBL_USER_PROJECT">
+              <PropertyRef Name="PROJECT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBL_USER___USER___3C54ED00">
+          <End Role="TBL_USER" Type="Self.TBL_USER" Multiplicity="1" />
+          <End Role="TBL_USER_PROJECT" Type="Self.TBL_USER_PROJECT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TBL_USER_PROJECT">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="CRE_PROJECT_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_ID" Type="int" Mode="In" />
+          <Parameter Name="P_START_DATE" Type="datetime" Mode="In" />
+          <Parameter Name="P_END_DATE" Type="datetime" Mode="In" />
+          <Parameter Name="P_CREDITS" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CRE_USER_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_ID" Type="int" Mode="In" />
+          <Parameter Name="P_FIRST_NAME" Type="nvarchar" Mode="In" />
+          <Parameter Name="P_LAST_NAME" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="CRE_USER_PROJECT_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_USER_ID" Type="int" Mode="In" />
+          <Parameter Name="P_PROJECT_ID" Type="int" Mode="In" />
+          <Parameter Name="P_ASSIGNED_DATE" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="DEL_PROJECT_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DEL_USER_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DEL_USER_PROJECT_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_USER_ID" Type="int" Mode="In" />
+          <Parameter Name="P_PROJECT_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RET_ALL_PROJECTS_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="RET_ALL_USER_PROJECTS_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="RET_ALL_USERS_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="RET_PROJECT_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RET_USER_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_USER_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RET_USER_PROJECT_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_USER_ID" Type="int" Mode="In" />
+          <Parameter Name="P_PROJECT_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UPD_PROJECT_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_ID" Type="int" Mode="In" />
+          <Parameter Name="P_START_DATE" Type="datetime" Mode="In" />
+          <Parameter Name="P_END_DATE" Type="datetime" Mode="In" />
+          <Parameter Name="P_CREDITS" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UPD_USER_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_ID" Type="int" Mode="In" />
+          <Parameter Name="P_FIRST_NAME" Type="nvarchar" Mode="In" />
+          <Parameter Name="P_LAST_NAME" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UPD_USER_PROJECT_PR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_USER_ID" Type="int" Mode="In" />
+          <Parameter Name="P_PROJECT_ID" Type="int" Mode="In" />
+          <Parameter Name="P_IS_ACTIVE" Type="bit" Mode="In" />
+          <Parameter Name="P_ASSIGNED_DATE" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="masterModelStoreContainer">
+          <EntitySet Name="TBL_PROJECT" EntityType="Self.TBL_PROJECT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_USER" EntityType="Self.TBL_USER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_USER_PROJECT" EntityType="Self.TBL_USER_PROJECT" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TBL_USER_PROJECT].[USER_ID] AS [USER_ID], 
+    [TBL_USER_PROJECT].[PROJECT_ID] AS [PROJECT_ID], 
+    [TBL_USER_PROJECT].[IS_ACTIVE] AS [IS_ACTIVE], 
+    [TBL_USER_PROJECT].[ASSIGNED_DATE] AS [ASSIGNED_DATE]
+    FROM [dbo].[TBL_USER_PROJECT] AS [TBL_USER_PROJECT]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__TBL_USER___PROJE__3D491139" Association="Self.FK__TBL_USER___PROJE__3D491139">
+            <End Role="TBL_PROJECT" EntitySet="TBL_PROJECT" />
+            <End Role="TBL_USER_PROJECT" EntitySet="TBL_USER_PROJECT" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBL_USER___USER___3C54ED00" Association="Self.FK__TBL_USER___USER___3C54ED00">
+            <End Role="TBL_USER" EntitySet="TBL_USER" />
+            <End Role="TBL_USER_PROJECT" EntitySet="TBL_USER_PROJECT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="masterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TBL_PROJECT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="START_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="END_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CREDITS" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TBL_USER_PROJECT" Relationship="Self.FK__TBL_USER___PROJE__3D491139" FromRole="TBL_PROJECT" ToRole="TBL_USER_PROJECT" />
+        </EntityType>
+        <EntityType Name="TBL_USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="FIRST_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LAST_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TBL_USER_PROJECT" Relationship="Self.FK__TBL_USER___USER___3C54ED00" FromRole="TBL_USER" ToRole="TBL_USER_PROJECT" />
+        </EntityType>
+        <EntityType Name="TBL_USER_PROJECT">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+            <PropertyRef Name="PROJECT_ID" />
+            <PropertyRef Name="IS_ACTIVE" />
+            <PropertyRef Name="ASSIGNED_DATE" />
+          </Key>
+          <Property Name="USER_ID" Type="Int32" Nullable="false" />
+          <Property Name="PROJECT_ID" Type="Int32" Nullable="false" />
+          <Property Name="IS_ACTIVE" Type="Boolean" Nullable="false" />
+          <Property Name="ASSIGNED_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TBL_PROJECT" Relationship="Self.FK__TBL_USER___PROJE__3D491139" FromRole="TBL_USER_PROJECT" ToRole="TBL_PROJECT" />
+          <NavigationProperty Name="TBL_USER" Relationship="Self.FK__TBL_USER___USER___3C54ED00" FromRole="TBL_USER_PROJECT" ToRole="TBL_USER" />
+        </EntityType>
+        <Association Name="FK__TBL_USER___PROJE__3D491139">
+          <End Role="TBL_PROJECT" Type="Self.TBL_PROJECT" Multiplicity="1" />
+          <End Role="TBL_USER_PROJECT" Type="Self.TBL_USER_PROJECT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_PROJECT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TBL_USER_PROJECT">
+              <PropertyRef Name="PROJECT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBL_USER___USER___3C54ED00">
+          <End Role="TBL_USER" Type="Self.TBL_USER" Multiplicity="1" />
+          <End Role="TBL_USER_PROJECT" Type="Self.TBL_USER_PROJECT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TBL_USER_PROJECT">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GSlateEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TBL_PROJECT" EntityType="Self.TBL_PROJECT" />
+          <EntitySet Name="TBL_USER" EntityType="Self.TBL_USER" />
+          <EntitySet Name="TBL_USER_PROJECT" EntityType="Self.TBL_USER_PROJECT" />
+          <AssociationSet Name="FK__TBL_USER___PROJE__3D491139" Association="Self.FK__TBL_USER___PROJE__3D491139">
+            <End Role="TBL_PROJECT" EntitySet="TBL_PROJECT" />
+            <End Role="TBL_USER_PROJECT" EntitySet="TBL_USER_PROJECT" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBL_USER___USER___3C54ED00" Association="Self.FK__TBL_USER___USER___3C54ED00">
+            <End Role="TBL_USER" EntitySet="TBL_USER" />
+            <End Role="TBL_USER_PROJECT" EntitySet="TBL_USER_PROJECT" />
+          </AssociationSet>
+          <FunctionImport Name="CRE_PROJECT_PR">
+            <Parameter Name="P_ID" Mode="In" Type="Int32" />
+            <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_CREDITS" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CRE_USER_PR">
+            <Parameter Name="P_ID" Mode="In" Type="Int32" />
+            <Parameter Name="P_FIRST_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_LAST_NAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CRE_USER_PROJECT_PR">
+            <Parameter Name="P_USER_ID" Mode="In" Type="Int32" />
+            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Int32" />
+            <Parameter Name="P_ASSIGNED_DATE" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="DEL_PROJECT_PR">
+            <Parameter Name="P_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DEL_USER_PR">
+            <Parameter Name="P_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DEL_USER_PROJECT_PR">
+            <Parameter Name="P_USER_ID" Mode="In" Type="Int32" />
+            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RET_ALL_PROJECTS_PR" ReturnType="Collection(masterModel.RET_ALL_PROJECTS_PR_Result)" />
+          <FunctionImport Name="RET_ALL_USER_PROJECTS_PR" ReturnType="Collection(masterModel.RET_ALL_USER_PROJECTS_PR_Result)" />
+          <FunctionImport Name="RET_ALL_USERS_PR" ReturnType="Collection(masterModel.RET_ALL_USERS_PR_Result)" />
+          <FunctionImport Name="RET_PROJECT_PR" ReturnType="Collection(masterModel.RET_PROJECT_PR_Result)">
+            <Parameter Name="P_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RET_USER_PR" ReturnType="Collection(masterModel.RET_USER_PR_Result)">
+            <Parameter Name="P_USER_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RET_USER_PROJECT_PR" ReturnType="Collection(masterModel.RET_USER_PROJECT_PR_Result)">
+            <Parameter Name="P_USER_ID" Mode="In" Type="Int32" />
+            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UPD_PROJECT_PR">
+            <Parameter Name="P_ID" Mode="In" Type="Int32" />
+            <Parameter Name="P_START_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_END_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="P_CREDITS" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UPD_USER_PR">
+            <Parameter Name="P_ID" Mode="In" Type="Int32" />
+            <Parameter Name="P_FIRST_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_LAST_NAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UPD_USER_PROJECT_PR">
+            <Parameter Name="P_USER_ID" Mode="In" Type="Int32" />
+            <Parameter Name="P_PROJECT_ID" Mode="In" Type="Int32" />
+            <Parameter Name="P_IS_ACTIVE" Mode="In" Type="Boolean" />
+            <Parameter Name="P_ASSIGNED_DATE" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="RET_ALL_PROJECTS_PR_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="DateTime" Name="START_DATE" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="END_DATE" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="CREDITS" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="RET_ALL_USER_PROJECTS_PR_Result">
+          <Property Type="Int32" Name="USER_ID" Nullable="false" />
+          <Property Type="Int32" Name="PROJECT_ID" Nullable="false" />
+          <Property Type="Boolean" Name="IS_ACTIVE" Nullable="false" />
+          <Property Type="DateTime" Name="ASSIGNED_DATE" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="RET_ALL_USERS_PR_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="FIRST_NAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LAST_NAME" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="RET_PROJECT_PR_Result">
+          <Property Type="DateTime" Name="START_DATE" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="END_DATE" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="CREDITS" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="RET_USER_PR_Result">
+          <Property Type="String" Name="FIRST_NAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LAST_NAME" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="RET_USER_PROJECT_PR_Result">
+          <Property Type="Boolean" Name="IS_ACTIVE" Nullable="false" />
+          <Property Type="DateTime" Name="ASSIGNED_DATE" Nullable="false" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="masterModelStoreContainer" CdmEntityContainer="GSlateEntities">
+          <EntitySetMapping Name="TBL_PROJECT">
+            <EntityTypeMapping TypeName="masterModel.TBL_PROJECT">
+              <MappingFragment StoreEntitySet="TBL_PROJECT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+                <ScalarProperty Name="CREDITS" ColumnName="CREDITS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_USER">
+            <EntityTypeMapping TypeName="masterModel.TBL_USER">
+              <MappingFragment StoreEntitySet="TBL_USER">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_USER_PROJECT">
+            <EntityTypeMapping TypeName="masterModel.TBL_USER_PROJECT">
+              <MappingFragment StoreEntitySet="TBL_USER_PROJECT">
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="PROJECT_ID" ColumnName="PROJECT_ID" />
+                <ScalarProperty Name="IS_ACTIVE" ColumnName="IS_ACTIVE" />
+                <ScalarProperty Name="ASSIGNED_DATE" ColumnName="ASSIGNED_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CRE_PROJECT_PR" FunctionName="masterModel.Store.CRE_PROJECT_PR" />
+          <FunctionImportMapping FunctionImportName="CRE_USER_PR" FunctionName="masterModel.Store.CRE_USER_PR" />
+          <FunctionImportMapping FunctionImportName="CRE_USER_PROJECT_PR" FunctionName="masterModel.Store.CRE_USER_PROJECT_PR" />
+          <FunctionImportMapping FunctionImportName="DEL_PROJECT_PR" FunctionName="masterModel.Store.DEL_PROJECT_PR" />
+          <FunctionImportMapping FunctionImportName="DEL_USER_PR" FunctionName="masterModel.Store.DEL_USER_PR" />
+          <FunctionImportMapping FunctionImportName="DEL_USER_PROJECT_PR" FunctionName="masterModel.Store.DEL_USER_PROJECT_PR" />
+          <FunctionImportMapping FunctionImportName="RET_ALL_PROJECTS_PR" FunctionName="masterModel.Store.RET_ALL_PROJECTS_PR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="masterModel.RET_ALL_PROJECTS_PR_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+                <ScalarProperty Name="CREDITS" ColumnName="CREDITS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RET_ALL_USER_PROJECTS_PR" FunctionName="masterModel.Store.RET_ALL_USER_PROJECTS_PR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="masterModel.RET_ALL_USER_PROJECTS_PR_Result">
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="PROJECT_ID" ColumnName="PROJECT_ID" />
+                <ScalarProperty Name="IS_ACTIVE" ColumnName="IS_ACTIVE" />
+                <ScalarProperty Name="ASSIGNED_DATE" ColumnName="ASSIGNED_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RET_ALL_USERS_PR" FunctionName="masterModel.Store.RET_ALL_USERS_PR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="masterModel.RET_ALL_USERS_PR_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RET_PROJECT_PR" FunctionName="masterModel.Store.RET_PROJECT_PR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="masterModel.RET_PROJECT_PR_Result">
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+                <ScalarProperty Name="CREDITS" ColumnName="CREDITS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RET_USER_PR" FunctionName="masterModel.Store.RET_USER_PR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="masterModel.RET_USER_PR_Result">
+                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RET_USER_PROJECT_PR" FunctionName="masterModel.Store.RET_USER_PROJECT_PR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="masterModel.RET_USER_PROJECT_PR_Result">
+                <ScalarProperty Name="IS_ACTIVE" ColumnName="IS_ACTIVE" />
+                <ScalarProperty Name="ASSIGNED_DATE" ColumnName="ASSIGNED_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UPD_PROJECT_PR" FunctionName="masterModel.Store.UPD_PROJECT_PR" />
+          <FunctionImportMapping FunctionImportName="UPD_USER_PR" FunctionName="masterModel.Store.UPD_USER_PR" />
+          <FunctionImportMapping FunctionImportName="UPD_USER_PROJECT_PR" FunctionName="masterModel.Store.UPD_USER_PROJECT_PR" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
