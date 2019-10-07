@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace WebAPI
 {
@@ -9,6 +10,8 @@ namespace WebAPI
     {
         public static void Register(HttpConfiguration config)
         {
+            //Enable Cross Origin
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             // Web API configuration and services
 
             // Web API routes

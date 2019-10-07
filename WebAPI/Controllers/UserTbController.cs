@@ -8,10 +8,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Cors;
 using GSlateDataAccess;
 
 namespace WebAPI.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "get,post")]
     public class UserTbController : ApiController
     {
         private GSlateEntities db = new GSlateEntities();
@@ -23,6 +25,7 @@ namespace WebAPI.Controllers
             return db.TBL_USER;
         }
 
+     
         // GET: api/UserTb/5
         [Route("api/User/Retrieve")]
         [ResponseType(typeof(TBL_USER))]
